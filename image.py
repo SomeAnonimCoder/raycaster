@@ -26,7 +26,7 @@ class Frame():
     h = 0
     w = 0
 
-    def __init__(self, h, w, color):
+    def __init__(self, w,h, color):
         self.img = Image.new("RGB", (h, w), color.getColor())
         self.h = h
         self.w = w
@@ -43,11 +43,9 @@ class Frame():
         self.img.putpixel((x, y), color.getColor())
 
     def drawRectangle(self, x, y, h, w, color):
-        try:
-            for a in range(int(x), int(h)):
-                for b in range(int(y), int(w)):
-                    self.setPixel(a, b, color)
-        except: pass
+        for a in range(int(x), int(h)):
+            for b in range(int(y), int(w)):
+                self.setPixel(a, b, color)
 """
 #Example;
 #creating color and image

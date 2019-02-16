@@ -1,23 +1,31 @@
+import math
 class Map:
-    w = 9;
-    h = 8
+    w = 10
+    h = 15
     mapArr = """
-111111111
-110000001
-100111001
-100100001
-100111101
-100000101
-100000001
-111111111
+111111111111111
+100000000100001
+100000111100001
+100000000000001
+100110000011101
+100000000000001
+100000000000001
+100011111100001
+100000000000001
+111111111111111
 """
 
-    # First index is 0!!!
-    def get(self, x, y):
-        # +1 for starting \n
-        return self.mapArr[int(x * (self.w + 1) + y + 1)]
+    #Axes: x -->, y - down
 
-    def empty(self, x, y):
-        if "0" == self.mapArr[int(x * (self.w + 1) + y + 1)]:
-            return True
-        return False
+
+    # First index is 0!!!
+    def get(self, y, x):
+        # +1 for starting \n
+        return self.mapArr[math.floor(y) * math.floor(self.h) + math.floor(x) + 1]
+
+    def empty(self, y, x):
+        try:
+            if "0" == self.mapArr[math.floor(y) * math.floor(self.h+1) + math.floor(x)+1]:
+                return True
+            return False
+        except: print(x,y, int(y * (self.w + 1) + x + 1))

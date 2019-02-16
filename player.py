@@ -12,7 +12,7 @@ class Player:
     turn =0
     walk=0
 
-    def __init__(self, x, y, v, fov):
+    def __init__(self, y, x, v, fov):
         self.x = x
         self.y = y
         self.view = v
