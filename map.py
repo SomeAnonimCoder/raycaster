@@ -15,9 +15,9 @@ class Map:
     # First index is 0!!!
     def get(self, x, y):
         # +1 for starting \n
-        return self.mapArr[x * (self.w + 1) + y + 1]
+        return self.mapArr[int(x * (self.w + 1) + y + 1)]
 
     def empty(self, x, y):
-        if "0" == self.mapArr[x * (self.w + 1) + y + 1]:
+        if "0" == self.mapArr[int(x * (self.w + 1) + y + 1)]:
             return True
         return False
