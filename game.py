@@ -50,6 +50,6 @@ class GameState:
 
 map = Map()
 for i in range(0,100):
-    player = Player(2, 2, 0 + i/10, 3.14159 / 4)
+    player = Player(2, 2 + i/10, 0 + i/10, 3.14159 / 4)
     gs = GameState(map, player)
     gs.render().save("map" + str(i) + ".jpg")
