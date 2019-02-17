@@ -1,11 +1,11 @@
 from math import *
 
-from image import *
-from map import *
-from player import Player
+from renderer.image import *
+from renderer.map import *
+from renderer.player import Player
 
 # Number of rays casting per image
-RAY_NUM = 100
+RAY_NUM = 50
 
 """
 Class containing game status and rendering it
@@ -58,7 +58,7 @@ class GameState:
                 # coordinates of current point of ray
                 x = dist * cos(alpha) + player.x
                 y = dist * sin(alpha) + player.y
-                dist += 1
+                dist += 0.5
                 # if we see the point - draw it gray on map
                 if map.empty(x / mapCellW, y / mapCellH):
                     mapFB.setPixel(x, y, Color(200, 200, 200))
@@ -77,7 +77,8 @@ class GameState:
 
         return mapFB, screenFB
 
-
+"""
+#Example:  save 10 photos of map and screen 
 map = Map()
 for i in range(0, 10):
     player = Player(30, 20, 0 + i / 10, 3.14159 / 4)
@@ -85,3 +86,4 @@ for i in range(0, 10):
     screen = gs.render()
     screen[0].save("map" + str(i) + ".jpg")
     screen[1].save("screen" + str(i) + ".jpg")
+"""

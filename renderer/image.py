@@ -51,7 +51,6 @@ class Frame():
 #creating color and image
 color = Color(50, 150, 50)
 img = Frame(100, 100, color)
-
 #set random black points
 import random
 color = Color(0, 0, 0)
