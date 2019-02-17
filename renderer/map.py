@@ -1,4 +1,6 @@
 import math
+
+
 class Map:
     w = 10
     h = 15
@@ -15,8 +17,7 @@ class Map:
 111111111111111
 """
 
-    #Axes: x -->, y - down
-
+    # Axes: x -->, y - down
 
     # First index is 0!!!
     def get(self, y, x):
@@ -24,8 +25,6 @@ class Map:
         return self.mapArr[math.floor(y) * math.floor(self.h) + math.floor(x) + 1]
 
     def empty(self, y, x):
-        try:
-            if "0" == self.mapArr[math.floor(y) * math.floor(self.h+1) + math.floor(x)+1]:
-                return True
-            return False
-        except: print(x,y, int(y * (self.w + 1) + x + 1))
+        if "0" == self.mapArr[math.floor(y) * math.floor(self.h + 1) + math.floor(x) + 1]:
+            return True
+        return False

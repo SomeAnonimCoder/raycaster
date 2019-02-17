@@ -4,10 +4,11 @@ from PIL import Image
 This is my bicycle wrap for PIL(low)
 """
 
-class Color():
-    r = 0;
-    g = 0;
-    b = 0;
+
+class Color:
+    r = 0
+    g = 0
+    b = 0
 
     def __init__(self, r, g, b):
         self.setColor(r, g, b)
@@ -18,15 +19,15 @@ class Color():
         self.b = b
 
     def getColor(self):
-        return (self.r, self.g, self.b)
+        return self.r, self.g, self.b
 
 
-class Frame():
+class Frame:
     img = None
     h = 0
     w = 0
 
-    def __init__(self, w,h, color):
+    def __init__(self, w, h, color):
         self.img = Image.new("RGB", (h, w), color.getColor())
         self.h = h
         self.w = w
@@ -46,6 +47,8 @@ class Frame():
         for a in range(int(x), int(h)):
             for b in range(int(y), int(w)):
                 self.setPixel(a, b, color)
+
+
 """
 #Example;
 #creating color and image
