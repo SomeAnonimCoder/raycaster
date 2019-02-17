@@ -41,7 +41,9 @@ class Frame:
         self.img.save(name)
 
     def setPixel(self, x, y, color):
-        self.img.putpixel((x, y), color.getColor())
+        try:self.img.putpixel((int(x), int(y)), color.getColor())
+        except:print(x,y)
+
 
     def drawRectangle(self, x, y, h, w, color):
         for a in range(int(x), int(h)):

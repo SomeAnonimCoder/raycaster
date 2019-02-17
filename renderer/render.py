@@ -5,7 +5,7 @@ from renderer.map import *
 from renderer.player import Player
 
 # Number of rays casting per image
-RAY_NUM = 100
+RAY_NUM = 50
 
 """
 Class containing game status and rendering it
@@ -41,7 +41,8 @@ class GameState:
         for i in range(0, map.w):
             for j in range(0, map.h):
                 if not map.empty(i, j):
-                    mapFB.drawRectangle(i * mapCellW, j * mapCellH, (i + 1) * mapCellW, (j + 1) * mapCellH,
+                    mapFB.drawRectangle(j * mapCellH,i * mapCellW,
+                                        (j + 1) * mapCellH,(i + 1) * mapCellW,
                                         Color(0, 0, 0))
 
         # iterating alpha
@@ -58,7 +59,8 @@ class GameState:
                 # coordinates of current point of ray
                 x = dist * cos(alpha) + player.x
                 y = dist * sin(alpha) + player.y
-                dist += 0.1
+                dist += 0.5
+
                 # if we see the point - draw it gray on map
                 if map.empty(x / mapCellW, y / mapCellH):
                     mapFB.setPixel(x, y, Color(200, 200, 200))
@@ -67,11 +69,10 @@ class GameState:
                     if (
                             -1000 / dist + screenFB.w / 2 > 0 and rayNum * screenCellH > 0 and 1000 / dist + screenCellW / 2 < screenFB.w and (
                             rayNum + 1) * screenFB.h / RAY_NUM < screenFB.h):
-                        screenFB.drawRectangle(-1000 / dist + screenFB.w / 2, rayNum * screenFB.h / RAY_NUM,
-                                               1000 / dist + screenFB.w / 2, (rayNum + 1) * screenFB.h / RAY_NUM,
+                        screenFB.drawRectangle( rayNum * screenFB.h / RAY_NUM, -1000 / dist + screenFB.w / 2,
+                                               (rayNum + 1) * screenFB.h / RAY_NUM, 1000 / dist + screenFB.w / 2,
                                                Color(125, 125, 125))
                     break
-                if getMonster(x/mapCellW, y/mapCellH): mapFB.drawRectangle(x-20,y-20,x+20,y+20, Color(0,0,0))
 
 
             rayNum += 1
@@ -79,16 +80,6 @@ class GameState:
             alpha += player.fov / RAY_NUM
 
         return mapFB, screenFB
-
-def getMonster(x,y):
-    monsters = [
-        (20,20),
-        (5,6),
-    ]
-    for i in monsters:
-        if i[0]==int(x) and i[1] ==int(y): return True
-        return 0
-
 """
 #Example:  save 10 photos of map and screen 
 map = Map()
@@ -98,4 +89,5 @@ for i in range(0, 10):
     screen = gs.render()
     screen[0].save("map" + str(i) + ".jpg")
     screen[1].save("screen" + str(i) + ".jpg")
+<<<<<<< HEAD:renderer/render.py
 """

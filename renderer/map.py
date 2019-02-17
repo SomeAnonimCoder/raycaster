@@ -20,11 +20,12 @@ class Map:
     # Axes: x -->, y - down
 
     # First index is 0!!!
-    def get(self, y, x):
+    def get(self, y,x):
         # +1 for starting \n
-        return self.mapArr[math.floor(y) * math.floor(self.h) + math.floor(x) + 1]
+        return self.mapArr[math.floor(y) * math.floor(self.w+1) + math.floor(x) + 1]
 
     def empty(self, y, x):
-        if "0" == self.mapArr[math.floor(y) * math.floor(self.h + 1) + math.floor(x) + 1]:
+        print(x,y)
+        if "0" == self.mapArr[math.floor(y) * math.floor(self.w+1) + math.floor(x) + 1]:
             return True
         return False

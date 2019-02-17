@@ -1,6 +1,10 @@
 from math import cos, sin
 from tkinter import *
 from keyboard import *
+from time import sleep
+from tkinter import *
+
+from PIL import Image as img
 from PIL import ImageTk
 
 from renderer.map import Map
@@ -40,4 +44,3 @@ while(1):
     mapsprite = canvas.create_image(80, 50, image=map)
     canvas.update()
     oldGs = gs
-
