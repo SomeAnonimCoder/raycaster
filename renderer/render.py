@@ -26,12 +26,12 @@ class GameState:
     def render(self):
         map = self.map
         player = self.player
-        mapFB = Frame(100, 150, Color(255, 255, 255))
+        mapFB = Frame(100, 150, Color(100,100,100))
         screenFB = Frame(480, 640, Color(255, 255, 255))
 
         # Size of one cell on the map
-        mapCellW = mapFB.w / map.w
-        mapCellH = mapFB.h / map.h
+        mapCellW = mapFB.w / (map.w)
+        mapCellH = mapFB.h / (map.h)
 
         # size of one cell on the screen
         screenCellW = screenFB.w / map.w
@@ -42,12 +42,12 @@ class GameState:
             for j in range(0, map.h):
                 if not map.empty(i, j):
                     mapFB.drawRectangle(j * mapCellH,i * mapCellW,
-                                        (j + 1) * mapCellH,(i + 1) * mapCellW,
+                                       (j + 1) * mapCellH,   (i + 1) * mapCellW,
                                         Color(0, 0, 0))
 
         # iterating alpha
         alpha = player.view - player.fov / 2
-        mapFB.drawRectangle(player.x - 1, player.y - 1, player.x + 1, player.y + 1, Color(255, 0, 0))
+        mapFB.drawRectangle( player.y - 1, player.x - 1, player.y + 1,player.x + 1, Color(255, 0, 0))
         rayNum = 0
         while alpha < player.fov / 2 + player.view:
             # iterating distance
@@ -63,7 +63,7 @@ class GameState:
 
                 # if we see the point - draw it gray on map
                 if map.empty(x / mapCellW, y / mapCellH):
-                    mapFB.setPixel(x, y, Color(200, 200, 200))
+                    mapFB.setPixel(y, x, Color(200, 200, 200))
                 else:
                     #drawing Walls
                     if (
@@ -71,7 +71,7 @@ class GameState:
                             rayNum + 1) * screenFB.h / RAY_NUM < screenFB.h):
                         screenFB.drawRectangle( rayNum * screenFB.h / RAY_NUM, -1000 / dist + screenFB.w / 2,
                                                (rayNum + 1) * screenFB.h / RAY_NUM, 1000 / dist + screenFB.w / 2,
-                                               Color(125, 125, 125))
+                                               map.get(x / mapCellW, y / mapCellH))
                     break
 
 

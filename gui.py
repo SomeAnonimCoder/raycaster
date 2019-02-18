@@ -41,6 +41,6 @@ while(1):
         except:
             pass
     imagesprite = canvas.create_image(320, 240, image=image)
-    mapsprite = canvas.create_image(80, 50, image=map)
+    mapsprite = canvas.create_image(80, 60, image=map)
     canvas.update()
     oldGs = gs
