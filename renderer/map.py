@@ -1,4 +1,5 @@
 import math
+from random import randint
 
 from renderer.image import Color
 
@@ -16,6 +17,7 @@ class Map:
               Color(0, 40, 0),
               Color(0, 0, 40),
               Color(30, 0, 0),
+              Color(30, 0, 0)
               ]
     mapArr = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -31,17 +33,46 @@ class Map:
     ]
     # Axes: x -->, y - down
 
+
+
+    def createMap(self, w,h, p):
+        map = []
+        i = []
+        for k in range(1,h+1):
+            i.append(1)
+        map.append(i)
+        for i in range(0,w-2):
+            part = []
+            for j in range(0,h):
+                if(randint(0,100)<100*p):
+                    part.append((randint(1,10)))
+                else:part.append(0)
+            part[0] = randint(1,10)
+            part[h-1] = randint(1,10)
+            map.append(part)
+        i = []
+        for k in range(1, h+1):
+            i.append(1)
+        map.append(i)
+
+        self.mapArr = map
+        self.w = w
+        self.h = h
+
+
+
     # First index is 0!!!
     def get(self, x, y):
         # +1 for starting \n
         try:return self.colors[self.mapArr[math.floor(x)][math.floor(y)]]
         except:
-            print(self.mapArr[math.floor(x)][math.floor(y)])
+            print("GET",self.mapArr[math.floor(x)][math.floor(y)])
             return Color(0,0,0)
 
 
     def empty(self, x, y):
-        if 0 == self.mapArr[math.floor(x)][math.floor(y)]:
-            return True
-        return False
-
+        try:
+            if 0 == self.mapArr[math.floor(x)][math.floor(y)]:
+                return True
+            return False
+        except: print("EMPTY:",x,y)

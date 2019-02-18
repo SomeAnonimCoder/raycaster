@@ -5,7 +5,7 @@ from renderer.map import *
 from renderer.player import Player
 
 # Number of rays casting per image
-RAY_NUM = 50
+RAY_NUM = 100
 
 """
 Class containing game status and rendering it
@@ -59,7 +59,7 @@ class GameState:
                 # coordinates of current point of ray
                 x = dist * cos(alpha) + player.x
                 y = dist * sin(alpha) + player.y
-                dist += 0.5
+                dist += 0.1
 
                 # if we see the point - draw it gray on map
                 if map.empty(x / mapCellW, y / mapCellH):
@@ -89,5 +89,4 @@ for i in range(0, 10):
     screen = gs.render()
     screen[0].save("map" + str(i) + ".jpg")
     screen[1].save("screen" + str(i) + ".jpg")
-<<<<<<< HEAD:renderer/render.py
 """

@@ -1,5 +1,7 @@
 from math import cos, sin
 from tkinter import *
+
+import keyboard
 from keyboard import *
 from time import sleep
 from tkinter import *
@@ -16,10 +18,14 @@ root.geometry('640x480')
 canvas = Canvas(root, width=640, height=480)
 canvas.pack(fill=BOTH)
 player = Player(30, 30, 1 / 10, 3.14159 / 3)
-gs = GameState(Map(), player)
+myMap = Map()
+myMap.createMap(10*3,15*3, 0.05)
+gs = GameState(myMap, player)
 
 while(1):
     oldGs = None
+    if is_pressed(keyboard.is_pressed("ESC")):
+        sys.exit(0)
     if is_pressed('w'):
         player.x += cos(player.view)
         player.y += sin(player.view)
@@ -29,7 +35,7 @@ while(1):
     elif is_pressed("d"): player.view+=0.1
     elif is_pressed("a"): player.view -= 0.1
     elif gs == oldGs: continue
-    gs = GameState(Map(), player)
+    gs = GameState(myMap, player)
     src = gs.render()
     img = src[1].img
     map = src[0].img
