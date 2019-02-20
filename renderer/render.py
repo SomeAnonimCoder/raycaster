@@ -69,9 +69,9 @@ class GameState:
                     if (
                             -1000 / dist + screenFB.w / 2 > 0 and rayNum * screenCellH > 0 and 1000 / dist + screenCellW / 2 < screenFB.w and (
                             rayNum + 1) * screenFB.h / RAY_NUM < screenFB.h):
-                        screenFB.drawRectangle( rayNum * screenFB.h / RAY_NUM, -1000 / dist + screenFB.w / 2,
+                        screenFB.drawTexture(rayNum * screenFB.h / RAY_NUM, -1000 / dist + screenFB.w / 2,
                                                (rayNum + 1) * screenFB.h / RAY_NUM, 1000 / dist + screenFB.w / 2,
-                                               map.get(x / mapCellW, y / mapCellH))
+                                               "renderer/res/wood.jpeg", mapCellW, mapCellH)
                     break
 
 
