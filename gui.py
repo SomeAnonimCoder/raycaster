@@ -30,8 +30,8 @@ while(1):
         player.x += cos(player.view)
         player.y += sin(player.view)
     elif is_pressed("s"):
-        player.x -= 0.1*cos(player.view)
-        player.y -= 0.1*sin(player.view)
+        player.x -=cos(player.view)
+        player.y -= sin(player.view)
     elif is_pressed("d"): player.view+=0.1
     elif is_pressed("a"): player.view -= 0.1
     elif gs == oldGs: continue

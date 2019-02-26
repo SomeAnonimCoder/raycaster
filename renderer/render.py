@@ -61,17 +61,27 @@ class GameState:
                 y = dist * sin(alpha) + player.y
                 dist += 0.1
 
+                beta = alpha - player.view
+
                 # if we see the point - draw it gray on map
                 if map.empty(x / mapCellW, y / mapCellH):
                     mapFB.setPixel(y, x, Color(200, 200, 200))
                 else:
                     #drawing Walls
                     if (
-                            -1000 / dist + screenFB.w / 2 > 0 and rayNum * screenCellH > 0 and 1000 / dist + screenCellW / 2 < screenFB.w and (
+                            -1000 / dist*cos(beta) + screenFB.w / 2 > 0 and rayNum * screenCellH > 0 and 1000 / dist*cos(beta) + screenCellW / 2 < screenFB.w and (
                             rayNum + 1) * screenFB.h / RAY_NUM < screenFB.h):
-                        screenFB.drawTexture(rayNum * screenFB.h / RAY_NUM, -1000 / dist + screenFB.w / 2,
-                                               (rayNum + 1) * screenFB.h / RAY_NUM, 1000 / dist + screenFB.w / 2,
-                                               "renderer/res/wood.jpeg", mapCellW, mapCellH)
+
+                        screenFB.drawTexture(
+
+                            rayNum * screenFB.h / RAY_NUM,
+                            -1000 / dist*cos(beta) + screenFB.w / 2,
+                            (rayNum + 1) * screenFB.h / RAY_NUM,
+                            1000 / dist*cos(beta) + screenFB.w / 2,
+                            "renderer/res/stone.jpeg",
+                            screenFB.w, screenFB.h,
+                            rayNum/RAY_NUM
+                        )
                     break
 
 
