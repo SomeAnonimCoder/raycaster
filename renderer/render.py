@@ -5,7 +5,7 @@ from renderer.map import *
 from renderer.player import Player
 
 # Number of rays casting per image
-RAY_NUM = 100
+RAY_NUM = 200
 
 """
 Class containing game status and rendering it
@@ -75,12 +75,12 @@ class GameState:
                         screenFB.drawTexture(
 
                             rayNum * screenFB.h / RAY_NUM,
-                            -1000 / dist*cos(beta) + screenFB.w / 2,
+                            -1000 / dist/cos(beta) + screenFB.w / 2,
                             (rayNum + 1) * screenFB.h / RAY_NUM,
-                            1000 / dist*cos(beta) + screenFB.w / 2,
-                            "renderer/res/stone.jpeg",
-                            screenFB.w, screenFB.h,
-                            rayNum/RAY_NUM
+                            1000 / dist/cos(beta) + screenFB.w / 2,
+                            "renderer/res/" + str(map.get(x / mapCellW, y / mapCellH)%4+1)+".jpg",
+                            x,y,
+                            mapCellW, mapCellH
                         )
                     break
 

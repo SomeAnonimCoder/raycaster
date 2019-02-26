@@ -63,11 +63,8 @@ class Map:
 
     # First index is 0!!!
     def get(self, x, y):
-        # +1 for starting \n
-        try:return self.colors[self.mapArr[math.floor(x)][math.floor(y)]]
-        except:
-            print("GET",self.mapArr[math.floor(x)][math.floor(y)])
-            return Color(0,0,0)
+        return self.mapArr[math.floor(x)][math.floor(y)]
+
 
 
     def empty(self, x, y):

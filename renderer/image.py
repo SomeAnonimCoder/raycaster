@@ -53,33 +53,30 @@ class Frame:
             for b in range(int(y), int(w)):
                 self.setPixel(a, b, color)
 
-    def drawTexture(self, x, y, h, w, texture, cellW, cellH, rayNum):
+    def drawTexture(self, x, y, h, w, texture,x1,y1, cellW, cellH):
         text = Image.open(texture)
         for i in range(int(x), int(h)):
             for j in range(int(y), int(w)):
 
                 try:
                     color = text.getpixel((
-                    abs(int(text.size[1] * ((i / cellW) - int(i / cellW)) * (x - h))) % text.size[1] - 1,
-                    abs(int(text.size[0] / ((y-w)) * (j-w))) - 1
+                        int(abs(x1/cellW + y1/cellH - int(x1/cellW+y1/cellH))*text.size[1])  ,
+                        abs(int(text.size[1] / ((y-w)) * (j-w)))
                     ))
                 except:
-                    color = (0,0,0)
-                    print (
-                    abs(int(text.size[1] * ((i / cellW) - int(i / cellW)) * (x - h))) % text.size[1],
-                    abs(int(text.size[0] / ((y-w)) * (j-w)))
-                )
+                   color = (0,0,0)
+
 
                 self.setPixel(i, j, Color(color[0], color[1], color[2]))
 
-
-#Example;
-#creating color and image
-color = Color(50, 150, 50)
-img = Frame(100, 100, color)
-#set random black points
-import random
-color = Color(0, 0, 0)
-img.drawTexture(0, 0, 100, 100, "renderer/res/stone.jpeg", 200, 200, 0.6)
-#saving image
-img.save("test.png")
+#
+# #Example;
+# #creating color and image
+# color = Color(50, 150, 50)
+# img = Frame(100, 100, color)
+# #set random black points
+# import random
+# color = Color(0, 0, 0)
+# img.drawTexture(0, 0, 100, 100, "renderer/res/stone.jpeg", 200, 200, 0.6)
+# #saving image
+# img.save("test.png")

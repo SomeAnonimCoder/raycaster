@@ -21,6 +21,7 @@ player = Player(30, 30, 1 / 10, 3.14159 / 3)
 myMap = Map()
 myMap.createMap(10*3,15*3, 0.05)
 gs = GameState(myMap, player)
+print(map)
 
 while(1):
     oldGs = None
