@@ -1,3 +1,4 @@
+import copy
 from math import *
 
 from renderer.image import *
@@ -19,6 +20,9 @@ class GameState:
     map = []
     player = None
     monsters = []
+    mapFB = Frame(100, 150, Color(100, 100, 100))
+    screenFB = Frame(480, 640, Color(0, 0, 0))
+    screenFB.makeWorld()
     def __init__(self, map: Map, player: Player):
         self.map = map
         self.player = player
@@ -26,12 +30,12 @@ class GameState:
     def render(self):
         map = self.map
         player = self.player
-        mapFB = Frame(100, 150, Color(100,100,100))
-        screenFB = Frame(480, 640, Color(255, 255, 255))
+        mapFB = copy.deepcopy(self.mapFB)
+        screenFB = copy.deepcopy(self.screenFB)
 
         # Size of one cell on the map
         mapCellW = mapFB.w / (map.w)
-        mapCellH = mapFB.h / (map.h)
+        mapCellH  = mapFB.h / map.h
 
         # size of one cell on the screen
         screenCellW = screenFB.w / map.w

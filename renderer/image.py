@@ -28,6 +28,7 @@ class Frame:
     h = 0
     w = 0
 
+
     def __init__(self, w, h, color):
         self.img = Image.new("RGB", (h, w), color.getColor())
         self.h = h
@@ -68,8 +69,10 @@ class Frame:
 
 
                 self.setPixel(i, j, Color(color[0], color[1], color[2]))
+    def makeWorld(self):
+        self.img = Image.open("renderer/res/background.jpg")
 
-#
+
 # #Example;
 # #creating color and image
 # color = Color(50, 150, 50)
