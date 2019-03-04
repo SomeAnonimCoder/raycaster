@@ -61,7 +61,7 @@ class Frame:
 
                 try:
                     color = text.getpixel((
-                        int(abs(x1/cellW + y1/cellH - int(x1/cellW+y1/cellH))*text.size[1])  ,
+                        int(abs(x1/cellW + y1/cellH - int(x1/cellW+y1/cellH))*text.size[1]),
                         abs(int(text.size[1] / ((y-w)) * (j-w)))
                     ))
                 except:
