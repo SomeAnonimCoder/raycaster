@@ -3,7 +3,6 @@ from math import *
 
 from renderer.image import *
 # Number of rays casting per image
-from renderer.image import Color
 from renderer.map import *
 from renderer.player import Player
 
@@ -31,8 +30,10 @@ class GameState:
         self.map = map
         self.player = player
 
+
+    # returns None if there no monsters in
+    # view ray or coordinates of monster in view ray
     def fire(self):
-        print("boom!")
         map = self.map
         player = self.player
         mapFB = copy.deepcopy(self.mapFB)
@@ -62,6 +63,9 @@ class GameState:
             if map.get(x / mapCellW, y / mapCellH)!=0:
                 return None
 
+    # returns two images. First - image to show as what player see, second -
+    # map to show in a corner of screen
+    #TODO: refactor to more functions with less size
     def render(self):
         map = self.map
         player = self.player
@@ -118,7 +122,7 @@ class GameState:
                             mapCellH)
                         break
 
-
+                # Drawing monster(Yes, monster is like a wall - it`s square)
                 if (int(x / mapCellW), int(y / mapCellH)) in self.monsters:
                     # print (int(x / mapCellW), int(y / mapCellH))
                     screenFB.drawTexture(
@@ -135,6 +139,7 @@ class GameState:
             # casting RAY_NUM rays per image
             alpha += player.fov / RAY_NUM
 
+            # draw a red point to see where you`ll fire
             screenFB.drawRectangle(screenFB.h/2-5, screenFB.w/2-5,screenFB.h/2+5, screenFB.w/2+5, Color(255,0,0))
 
         return mapFB, screenFB

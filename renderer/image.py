@@ -1,10 +1,8 @@
 from PIL import Image
-from math import sqrt
 
 """
 This is my bicycle wrap for PIL(low)
 """
-
 
 class Color:
     r = 0
@@ -22,7 +20,7 @@ class Color:
     def getColor(self):
         return self.r, self.g, self.b
 
-
+# class containing? loading and saving images. Wrap for PIL
 class Frame:
     img = None
     h = 0
@@ -34,11 +32,14 @@ class Frame:
         self.h = h
         self.w = w
 
-    def clear(self):
+    # makes the image all in one color
+    #TODO: remove
+    def clear(self, color):
         w = self.w
         h = self.h
-        self.img = Image.new("RGB", (h, w), Color.getColor())
+        self.img = Image.new("RGB", (h, w), color.getColor())
 
+    # saves the image
     def save(self, name):
         self.img.save(name)
 
@@ -48,12 +49,13 @@ class Frame:
         except:
             #print(x, y)
             pass
-
+    # drawing rectangle with start at (x,y) and finsh at (w,h)
     def drawRectangle(self, x, y, h, w, color):
         for a in range(int(x), int(h)):
             for b in range(int(y), int(w)):
                 self.setPixel(a, b, color)
 
+    #drawing texture(like drawRectangle, but texture instead of simple color)
     def drawTexture(self, x, y, h, w, texture,x1,y1, cellW, cellH):
         text = Image.open(texture)
         for i in range(int(x), int(h)):
@@ -69,6 +71,8 @@ class Frame:
 
 
                 self.setPixel(i, j, Color(color[0], color[1], color[2]))
+
+    # init image with the simple background
     def makeWorld(self):
         self.img = Image.open("renderer/res/background.jpg")
 

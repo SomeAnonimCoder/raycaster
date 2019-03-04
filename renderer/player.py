@@ -1,6 +1,6 @@
 import math
 
-
+#
 class Player:
     # coordinates
     x = 0
@@ -8,10 +8,7 @@ class Player:
 
     # view direction and field of view(Radians!!!)
     view = 0
-    fov = math.pi / 3
-
-    turn = 0
-    walk = 0
+    fov = math.pi / 2
 
     def __init__(self, y, x, v, fov):
         self.x = x

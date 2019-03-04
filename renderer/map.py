@@ -34,7 +34,8 @@ class Map:
     # Axes: x -->, y - down
 
 
-
+    # Creating random map. Issue is to make this map more
+    # comfortable - now it's a lot of separate parts of wall
     def createMap(self, w,h, p):
         map = []
         i = []
@@ -60,16 +61,14 @@ class Map:
         self.h = h
 
 
-
+    # function returning type of wall or 0 if there's no wall in this coordinates
     # First index is 0!!!
     def get(self, x, y):
         return self.mapArr[math.floor(x)][math.floor(y)]
 
 
-
+    #returns true if map is free at this coordinates(Attention, monsters don't count!)
     def empty(self, x, y):
-        try:
-            if 0 == self.mapArr[math.floor(x)][math.floor(y)]:
-                return True
-            return False
-        except: print("EMPTY:",x,y)
+        if 0 == self.mapArr[math.floor(x)][math.floor(y)]:
+            return True
+        return False
