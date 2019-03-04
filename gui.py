@@ -65,6 +65,4 @@ while (1):
         imagesprite = canvas.create_image(320, 240, image=image)
         mapsprite = canvas.create_image(80, 60, image=map)
         canvas.update()
-
-        #update oldGS
         oldGs = gs

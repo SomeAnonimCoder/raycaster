@@ -32,13 +32,6 @@ class Frame:
         self.h = h
         self.w = w
 
-    # makes the image all in one color
-    #TODO: remove
-    def clear(self, color):
-        w = self.w
-        h = self.h
-        self.img = Image.new("RGB", (h, w), color.getColor())
-
     # saves the image
     def save(self, name):
         self.img.save(name)
@@ -75,15 +68,3 @@ class Frame:
     # init image with the simple background
     def makeWorld(self):
         self.img = Image.open("renderer/res/background.jpg")
-
-
-# #Example;
-# #creating color and image
-# color = Color(50, 150, 50)
-# img = Frame(100, 100, color)
-# #set random black points
-# import random
-# color = Color(0, 0, 0)
-# img.drawTexture(0, 0, 100, 100, "renderer/res/stone.jpeg", 200, 200, 0.6)
-# #saving image
-# img.save("test.png")
