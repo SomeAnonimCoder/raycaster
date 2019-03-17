@@ -1,4 +1,5 @@
 from math import cos, sin
+from time import sleep
 from tkinter import *
 
 import keyboard
@@ -20,10 +21,15 @@ myMap = Map()
 myMap.createMap(10 * 3, 15 * 3, 0.05)
 gs = GameState(myMap, player)
 oldGs = None
-
 # main loop
+monstersRest = gs.monsters.__len__()
+print("There are", monstersRest, "monsters. Shut'em all!")
 while (1):
-
+    monstersRest = gs.monsters.__len__()
+    if(monstersRest==0):
+        print("You WON!!!")
+        sleep(1)
+        sys.exit(0)
     # moving or exiting if some keys pressed
     if is_pressed(keyboard.is_pressed("ESC")):
         sys.exit(-1)
@@ -40,7 +46,7 @@ while (1):
     elif is_pressed("SPACE"):
         try:
             gs.monsters.remove(gs.fire())
-            print("Killed!")
+            print("Killed! Rest:", monstersRest-1)
         except:print ("Dont shoot in my wall!")
 
     #refresh gamestate

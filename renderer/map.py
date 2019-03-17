@@ -7,18 +7,7 @@ from renderer.image import Color
 class Map:
     w = 10
     h = 15
-    colors = [Color(0, 0, 0),
-              Color(200, 200, 0),
-              Color(0, 150, 50),
-              Color(120, 100, 120),
-              Color(0, 120, 40),
-              Color(0,50, 230),
-              Color(0, 0, 0),
-              Color(0, 40, 0),
-              Color(0, 0, 40),
-              Color(30, 0, 0),
-              Color(30, 0, 0)
-              ]
+    #default map for debug. just don't call createMap
     mapArr = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
