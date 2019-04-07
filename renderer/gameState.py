@@ -1,5 +1,5 @@
 import copy
-from math import *
+from renderer.trigon import sin, cos
 
 from renderer.image import *
 # Number of rays casting per image

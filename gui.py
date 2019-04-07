@@ -59,7 +59,7 @@ while (1):
         img = src[1].img
         map = src[0].img
         image = ImageTk.PhotoImage(img)
-        map = ImageTk.PhotoImage(map)
+        map = ImageTk.PhotoImage(map) 
 
         #removing old images
         for k in canvas.children:
