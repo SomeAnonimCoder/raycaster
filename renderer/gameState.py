@@ -8,7 +8,7 @@ from renderer.image import *
 from renderer.map import *
 from renderer.player import Player
 
-RAY_NUM = 100
+RAY_NUM = 50
 #
 # """
 # Class containing game status and rendering it
@@ -76,6 +76,7 @@ class GameState:
                     mapFB.drawRectangle(j * mapCellH, i * mapCellW, (j + 1) * mapCellH, (i + 1) * mapCellW,
                                         Color(0, 0, 0))
 
+
     #TODO: refactor to more functions with less size
 
     # draw walls and monsters on screen
@@ -99,56 +100,69 @@ class GameState:
             k = tan(alpha)
             if k == 0: k = 0.0001
             b = player.y - k*player.x
-            t = cos(alpha)
+            t = cos(beta)
+            d = 10 ** 3
+            x = 10 ** 3
+            y = 10 ** 3
+            xarr = []
+            yarr = []
+            darr = []
             for i in range(0, map.w):
                 for j in range(0, map.h):
-                    d=-1
-                    x=-1
-                    y=-1
                     if not map.empty(i, j):
+
+                        #Cubes coordinates
                         x0 = i*mapCellW
                         y0 = j*mapCellH
                         x = (i+1)*mapCellW
                         y = (j+1)*mapCellH
 
-                        y1 = y0;
+                        #расчет x,y исходя из 4х вариантов пересечения
+                        y1 = y0
                         x1 = (y0-b)/k
                         d1 = sqrt(y1**2 + x1**2)
-                        if(player.y-y1)/t>0: d1 = 10**3
+                        #Проверка на то, не позади игрока ли пересечение
+                        if(player.y-y1)/t>0 or x1<0 or y1<0: d1 = 100**3
 
                         y2 = y
-                        x2 = (y1-b)/k
+                        x2 = (y-b)/k
                         d2 = sqrt(y2**2 + x2**2)
-                        if(player.y - y2)/t>0:d2 = 10**3
+                        if(player.y - y2)/t>0 or x2<0 or y2<0:d2 = 100**3
 
                         y3 = k*x0 + b
                         x3 = x0
                         d3 = sqrt(y3**2 + x3**2)
-                        if(player.y - y3)/t>0:d3 = 10**3
+                        if(player.y - y3)/t>0 or x3<0 or y3<0:d3 = 100**3
 
 
-                        y4 = k*x1 + b
+                        y4 = k*x + b
                         x4 = x
                         d4 = sqrt(y4**2 + x4**2)
-                        if(player.y - y3)/t>0:d3 = 10**3
+                        if(player.y - y3)/t>0 or x4<0 or y4<0:d3 = 100**3
 
-
+                        #ВЫбор ближайшего пересечения для данного куба
                         dist = min(d1,d2,d3,d4)
-
-
                         if dist==d1:x, y = x1,y1
                         elif dist==d2: x,y = x2,y2
                         elif dist==d3: x,y = x3, y3
                         elif dist==d4:x,y = x4, y4
+                        else: raise ArithmeticError("WTF?!")
+                        if(d):
+                            darr.append(dist)
+                            xarr.append(x)
+                            yarr.append(y)
 
-            # drawing Walls(not higher than the screen!)
+            #Выбор ближайшего из пересеченных кубов
+            d = min(darr)
+            x = xarr[darr.index(d)]
+            y = yarr[darr.index(d)]
             screenFB.drawTexture(
-                        rayNum * screenFB.h / RAY_NUM, -10000 / dist / cos(beta) + screenFB.w / 2,
-                        (rayNum + 1) * screenFB.h / RAY_NUM, 10000 / dist + screenFB.w / 2,
+                        rayNum * screenFB.h / RAY_NUM, -1000 / d / cos(beta) + screenFB.w / 2,
+                        (rayNum + 1) * screenFB.h / RAY_NUM, 1000 / d/cos(beta) + screenFB.w / 2,
                         "renderer/res/" + str(map.get(i, j) % 4 + 1) + ".jpg",
                          x, y, mapCellW, mapCellH)
 
-
+            #Увеличиваем угол
             rayNum+=1
             alpha += player.fov / RAY_NUM
 
