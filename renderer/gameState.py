@@ -96,79 +96,85 @@ class GameState:
         mapFB.drawRectangle(player.y - 1, player.x - 1, player.y + 1, player.x + 1, Color(255, 0, 0))
         rayNum = 0
         while alpha < player.fov / 2 + player.view:
-            beta = alpha - player.view
-            k = tan(alpha)
-            if k == 0: k = 0.0001
-            b = player.y - k*player.x
-            t = cos(beta)
-            d = 10 ** 3
-            x = 10 ** 3
-            y = 10 ** 3
-            xarr = []
-            yarr = []
-            darr = []
-            for i in range(0, map.w):
-                for j in range(0, map.h):
-                    if not map.empty(i, j):
-
-                        #Cubes coordinates
-                        x0 = i*mapCellW
-                        y0 = j*mapCellH
-                        x = (i+1)*mapCellW
-                        y = (j+1)*mapCellH
-
-                        #расчет x,y исходя из 4х вариантов пересечения
-                        y1 = y0
-                        x1 = (y0-b)/k
-                        d1 = sqrt(y1**2 + x1**2)
-                        #Проверка на то, не позади игрока ли пересечение
-                        if(player.y-y1)/t>0 or x1<0 or y1<0: d1 = 100**3
-
-                        y2 = y
-                        x2 = (y-b)/k
-                        d2 = sqrt(y2**2 + x2**2)
-                        if(player.y - y2)/t>0 or x2<0 or y2<0:d2 = 100**3
-
-                        y3 = k*x0 + b
-                        x3 = x0
-                        d3 = sqrt(y3**2 + x3**2)
-                        if(player.y - y3)/t>0 or x3<0 or y3<0:d3 = 100**3
-
-
-                        y4 = k*x + b
-                        x4 = x
-                        d4 = sqrt(y4**2 + x4**2)
-                        if(player.y - y3)/t>0 or x4<0 or y4<0:d3 = 100**3
-
-                        #ВЫбор ближайшего пересечения для данного куба
-                        dist = min(d1,d2,d3,d4)
-                        if dist==d1:x, y = x1,y1
-                        elif dist==d2: x,y = x2,y2
-                        elif dist==d3: x,y = x3, y3
-                        elif dist==d4:x,y = x4, y4
-                        else: raise ArithmeticError("WTF?!")
-                        if(d):
-                            darr.append(dist)
-                            xarr.append(x)
-                            yarr.append(y)
-
-            #Выбор ближайшего из пересеченных кубов
-            d = min(darr)
-            x = xarr[darr.index(d)]
-            y = yarr[darr.index(d)]
-            screenFB.drawTexture(
+            beta, d, x, y = self.getCollision(alpha, map, mapCellH, mapCellW, player)
+            if d<1000:screenFB.drawTexture(
                         rayNum * screenFB.h / RAY_NUM, -1000 / d / cos(beta) + screenFB.w / 2,
                         (rayNum + 1) * screenFB.h / RAY_NUM, 1000 / d/cos(beta) + screenFB.w / 2,
-                        "renderer/res/" + str(map.get(i, j) % 4 + 1) + ".jpg",
+                        "renderer/res/1.jpg",
                          x, y, mapCellW, mapCellH)
 
             #Увеличиваем угол
             rayNum+=1
             alpha += player.fov / RAY_NUM
 
-            # draw a red point to see where you`ll fire
-            screenFB.drawRectangle(screenFB.h/2-5, screenFB.w/2-5,screenFB.h/2+5, screenFB.w/2+5, Color(255,0,0))
+        # draw a red point to see where you`ll fire
+        screenFB.drawRectangle(screenFB.h/2-5, screenFB.w/2-5,screenFB.h/2+5, screenFB.w/2+5, Color(255,0,0))
 
+    def getCollision(self, alpha, map, mapCellH, mapCellW, player):
+        beta = alpha - player.view
+        k = tan(alpha)
+        if k == 0: k = 0.0001
+        b = player.y - k * player.x
+        t = cos(beta)
+        d = 10 ** 3
+        x = 10 ** 3
+        y = 10 ** 3
+        xarr = []
+        yarr = []
+        darr = []
+        for i in range(0, map.w):
+            for j in range(0, map.h):
+                if not map.empty(i, j):
+
+                    # Cubes coordinates
+                    x0 = i * mapCellW
+                    y0 = j * mapCellH
+                    x = (i + 1) * mapCellW
+                    y = (j + 1) * mapCellH
+
+                    # расчет x,y исходя из 4х вариантов пересечения
+                    y1 = y0
+                    x1 = (y0 - b) / k
+                    d1 = sqrt(y1 ** 2 + x1 ** 2)
+                    # Проверка на то, не позади игрока ли пересечение
+                    if (player.y - y1) / t > 0 and x1 < 0 and y1 < 0: d1 = 100 ** 3
+
+                    y2 = y
+                    x2 = (y - b) / k
+                    d2 = sqrt(y2 ** 2 + x2 ** 2)
+                    if (player.y - y2) / t > 0 or x2 < 0 or y2 < 0: d2 = 100 ** 3
+
+                    y3 = k * x0 + b
+                    x3 = x0
+                    d3 = sqrt(y3 ** 2 + x3 ** 2)
+                    if (player.y - y3) / t > 0 or x3 < 0 or y3 < 0: d3 = 100 ** 3
+
+                    y4 = k * x + b
+                    x4 = x
+                    d4 = sqrt(y4 ** 2 + x4 ** 2)
+                    if (player.y - y3) / t > 0 or x4 < 0 or y4 < 0: d3 = 100 ** 3
+
+                    # ВЫбор ближайшего пересечения для данного куба
+                    dist = min(d1, d2, d3, d4)
+                    if dist == d1:
+                        x, y = x1, y1
+                    elif dist == d2:
+                        x, y = x2, y2
+                    elif dist == d3:
+                        x, y = x3, y3
+                    elif dist == d4:
+                        x, y = x4, y4
+                    else:
+                        raise ArithmeticError("WTF?!")
+                    if (d):
+                        darr.append(dist)
+                        xarr.append(x)
+                        yarr.append(y)
+        # Выбор ближайшего из пересеченных кубов
+        d = min(darr)
+        x = xarr[darr.index(d)]
+        y = yarr[darr.index(d)]
+        return beta, d, x, y
 
     # returns two images. First - image to show as what player see, second -
     # map to show in a corner of screen
